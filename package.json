@@ -1,0 +1,21 @@
+{
+  "name": "com.maranara.essentials",
+  "version": "1.0.0",
+  "displayName": "Maranara Essentials",
+  "description": "A collection of essential Unity scripts, such as an Input Shell, Pool Manager, various level utility scripts and library extensions.",
+  "unity": "2021.3",
+  "unityRelease": "18f1",
+ "keywords": [
+    "maranara",
+    "utility",
+    "input",
+	"essential",
+	"essentials",
+	"mara"
+  ],
+  "author": {
+    "name": "Maranara",
+    "email": "maranara0sauce@gmail.com",
+    "url": "https://www.ethan-mara.com"
+  }
+}
