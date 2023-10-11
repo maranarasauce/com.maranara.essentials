@@ -7,14 +7,21 @@ namespace Maranara.General
     public class ConstantMotion : MonoBehaviour
     {
         [SerializeField] private Vector3 positional;
-        public bool rotation;
-        [SerializeField] private Quaternion rotational;
+        [SerializeField] private Vector3 rotational;
+        public bool scaleTime;
 
         private void Update()
         {
-            transform.position += positional * Time.deltaTime;
-            if (rotation)
-                transform.rotation *= rotational;
+            Vector3 a = positional;
+            Vector3 b = rotational;
+            if (scaleTime)
+            {
+                a *= Time.deltaTime;
+                b *= Time.deltaTime;
+            }
+
+            transform.position += a;
+            transform.rotation *= Quaternion.Euler(b);
         }
     }
 
