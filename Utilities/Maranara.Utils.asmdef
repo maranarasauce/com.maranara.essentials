@@ -1,0 +1,19 @@
+{
+    "name": "Maranara.Utils",
+    "rootNamespace": "",
+    "references": [
+        "UniTask",
+        "Unity.Addressables",
+        "UniTask.Addressables",
+        "Unity.ResourceManager"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Label text="Input Set Creator" display-tooltip-when-elided="true" name="Title" style="height: auto; -unity-text-align: middle-center; font-size: 15px; -unity-font-style: bold; opacity: 1; margin-top: 10px; flex-direction: row; flex-shrink: 1; margin-bottom: 10px;" />
+    <uie:PropertyField binding-path="generatedSet" name="generatedSet" label="Generated Set" style="margin-top: 0; padding-left: 4px; padding-right: 4px; padding-top: 4px; padding-bottom: 4px;" />
+    <ui:VisualElement name="datamanagement" style="flex-direction: row; flex-wrap: nowrap; flex-shrink: initial; flex-grow: initial; flex-basis: initial; justify-content: center; align-items: stretch; padding-top: 4px; padding-bottom: 4px;">
+        <ui:Button text="Load" display-tooltip-when-elided="true" name="load" style="white-space: nowrap;" />
+        <ui:Button text="Save" display-tooltip-when-elided="true" name="save" />
+        <ui:Button text="Save As" display-tooltip-when-elided="true" name="saveas" />
+    </ui:VisualElement>
+    <ui:VisualElement name="creataction" style="align-items: stretch; flex-direction: row; justify-content: space-around; margin-top: 15px;">
+        <ui:Label text="New Action" display-tooltip-when-elided="true" style="-unity-text-align: middle-left;" />
+        <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" binding-path="NewActionName" name="NewActionName" style="width: 50%;" />
+        <uie:EnumField value="Digital" type="InputSet+ActionType, Maranara.InputShell" binding-path="NewActionType" name="NewActionType" />
+        <ui:Toggle value="true" tooltip="Mirror" binding-path="NewActionMirrored" name="NewActionMirrored" />
+        <ui:Button text="Add" display-tooltip-when-elided="true" name="addaction" />
+    </ui:VisualElement>
+    <ui:Label text="Input Set" display-tooltip-when-elided="true" name="settitle" style="-unity-text-align: middle-center; font-size: 15px; margin-left: 3px; margin-right: 3px; margin-top: 13px; margin-bottom: 3px;" />
+    <ui:TextField picking-mode="Ignore" label="Input Set Name" value="filler text" text="PascalCase" binding-path="SetName" style="-unity-text-align: middle-left;" />
+    <ui:VisualElement name="actionset" />
+</ui:UXML>
