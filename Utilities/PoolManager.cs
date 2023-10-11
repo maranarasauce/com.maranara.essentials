@@ -1,15 +1,12 @@
 ﻿using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
-using Maranara.General;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using static UnityEngine.ParticleSystem;
 using Random = UnityEngine.Random;
 
-namespace Screamies.Utility
+namespace Maranara.Utility
 {
     public enum FullPoolHandleType
     {

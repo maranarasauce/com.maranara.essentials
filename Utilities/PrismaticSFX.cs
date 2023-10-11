@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Milksoup.Interaction
+namespace Maranara.Utility
 {
     [RequireComponent(typeof(AudioSource))]
     public class PrismaticSFX : MonoBehaviour

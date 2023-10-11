@@ -2,40 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyAfterTime : MonoBehaviour
+namespace Maranara.Utility
 {
-    [SerializeField] private bool disableInstead;
-    [SerializeField] private float delay;
-    [SerializeField] private AudioSource referenceLength;
-    private float time;
-
-    public void Init(AudioSource src)
+    public class DestroyAfterTime : MonoBehaviour
     {
-        referenceLength = src;
-        delay = referenceLength.clip.length;
-        
-    }
+        [SerializeField] private bool disableInstead;
+        [SerializeField] private float delay;
+        [SerializeField] private AudioSource referenceLength;
+        private float time;
 
-    private void Start()
-    {
-        if (referenceLength != null)
-            Init(referenceLength);
-        time = delay;
-    }
-
-    private void Update()
-    {
-        time -= Time.deltaTime;
-        if (time <= 0)
+        public void Init(AudioSource src)
         {
-            End();
+            referenceLength = src;
+            delay = referenceLength.clip.length;
+
+        }
+
+        private void Start()
+        {
+            if (referenceLength != null)
+                Init(referenceLength);
+            time = delay;
+        }
+
+        private void Update()
+        {
+            time -= Time.deltaTime;
+            if (time <= 0)
+            {
+                End();
+            }
+        }
+
+        private void End()
+        {
+            if (disableInstead)
+                gameObject.SetActive(false);
+            else Destroy(gameObject);
         }
     }
-
-    private void End()
-    {
-        if (disableInstead)
-            gameObject.SetActive(false);
-        else Destroy(gameObject);
-    }
-}
+}   

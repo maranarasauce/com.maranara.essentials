@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Maranara.Utility
+{
     public class TransformLineRenderer : MonoBehaviour
     {
         public Transform first;
@@ -14,3 +16,4 @@ using UnityEngine;
             renderer.SetPosition(1, renderer.transform.InverseTransformPoint(last.position));
         }
     }
+}

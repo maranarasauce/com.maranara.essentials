@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Maranara.General
+namespace Maranara.Utility
 {
     public class LookAtCamera : MonoBehaviour
     {

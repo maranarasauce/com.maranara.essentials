@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RigidbodySettings : MonoBehaviour
+namespace Maranara.Utility
 {
-    public Transform comOverride;
-    Rigidbody selfRB;
-    private void Start()
+    public class RigidbodySettings : MonoBehaviour
     {
-        selfRB = GetComponent<Rigidbody>();
-        if (comOverride != null)
-            selfRB.centerOfMass = comOverride.position;
+        public Transform comOverride;
+        Rigidbody selfRB;
+        private void Start()
+        {
+            selfRB = GetComponent<Rigidbody>();
+            if (comOverride != null)
+                selfRB.centerOfMass = comOverride.position;
+        }
     }
+
 }

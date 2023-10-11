@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Milksoup.Meta
+namespace Maranara.Utility
 {
     [RequireComponent(typeof(Renderer))]
     public class DisableWhenInvisible : MonoBehaviour
@@ -17,7 +17,7 @@ namespace Milksoup.Meta
         private void Update()
         {
             if (!rend.isVisible)
-                Destroy(gameObject);
+                gameObject.SetActive(false);
         }
     }
 }
