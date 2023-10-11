@@ -62,6 +62,8 @@ public class InputSet_Inspector : Editor
     {
         InputSet set = (InputSet)target;
 
+        if (set.actions == null)
+            set.actions = new List<InputSet.Action>();
         for (int i = 0; i < set.actions.Count; i++)
         {
             InputSet.Action action = set.actions[i];
