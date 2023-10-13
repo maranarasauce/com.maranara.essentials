@@ -5,65 +5,69 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Input Set", menuName = "ScriptableObjects/Maranara/Input Set", order = 1)]
-public class InputSet : ScriptableObject
+namespace Maranara.InputShell
 {
-    [Serializable]
-    public struct Action
+    [CreateAssetMenu(fileName = "Input Set", menuName = "ScriptableObjects/Maranara/Input Set", order = 1)]
+    public class InputSet : ScriptableObject
     {
-        public ActionType Type;
-        public string Name;
-        public bool Mirrored;
-    }
-
-    public enum ActionType
-    {
-        Haptic,
-        Digital,
-        Joystick,
-        Axis,
-        Pose
-    }
-
-    [SerializeField] public MonoScript generatedSet;
-    [SerializeField] public List<Action> actions;
-    
-    public string NewActionName;
-    public InputSet.ActionType NewActionType;
-    public bool NewActionMirrored;
-    public string SetName;
-    public void RemoveAction(string name)
-    {
-        //actions.RemoveAt(offset);
-        for (int i = 0; i < actions.Count; i++)
+        [Serializable]
+        public struct Action
         {
-            if (actions[i].Name == name)
-            {
-                actions.RemoveAt(i);
-                return;
-            }
-                
+            public ActionType Type;
+            public string Name;
+            public bool Mirrored;
         }
-    }
 
-    public void AddAction(string name, ActionType type, bool mirror)
-    {
-        foreach (Action test in actions)
+        public enum ActionType
         {
-            if (test.Name == name)
+            Haptic,
+            Digital,
+            Joystick,
+            Axis,
+            Pose
+        }
+
+        [SerializeField] public MonoScript generatedSet;
+        [SerializeField] public List<Action> actions;
+
+        public string NewActionName;
+        public InputSet.ActionType NewActionType;
+        public bool NewActionMirrored;
+        public string SetName;
+        public void RemoveAction(string name)
+        {
+            //actions.RemoveAt(offset);
+            for (int i = 0; i < actions.Count; i++)
             {
-                Debug.Log("Rejected due to having the same name");
-                return;
+                if (actions[i].Name == name)
+                {
+                    actions.RemoveAt(i);
+                    return;
+                }
+
             }
         }
 
-        Action action = new Action()
+        public void AddAction(string name, ActionType type, bool mirror)
         {
-            Name = name,
-            Type = type,
-            Mirrored = mirror
-        };
+            foreach (Action test in actions)
+            {
+                if (test.Name == name)
+                {
+                    Debug.Log("Rejected due to having the same name");
+                    return;
+                }
+            }
 
-        actions.Add(action);
+            Action action = new Action()
+            {
+                Name = name,
+                Type = type,
+                Mirrored = mirror
+            };
+
+            actions.Add(action);
+        }
     }
+
 }

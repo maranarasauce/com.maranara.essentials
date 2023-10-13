@@ -8,6 +8,7 @@ namespace Maranara.InputShell
 {
     public class InputManager : MonoBehaviour
     {
+        public BaseInput InputSet;
         public static InputManager instance;
         [Serializable]
         public struct PluginPair
@@ -15,7 +16,7 @@ namespace Maranara.InputShell
             public RuntimePlatform platform;
             public InputPlugin plugin;
         }
-        [SerializeField] PluginPair[] plugins;
+        [SerializeField] PluginPair[] Plugins;
         private InputPlugin activePlugin;
 
         public void Awake()
@@ -23,14 +24,20 @@ namespace Maranara.InputShell
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            activePlugin = plugins.FirstOrDefault(x => Application.platform == x.platform).plugin;
-            foreach (PluginPair plugin in plugins)
+            activePlugin = Plugins.FirstOrDefault(x => Application.platform == x.platform).plugin;
+            activePlugin.ActiveInput = InputSet;
+            foreach (PluginPair plugin in Plugins)
             {
                 if (plugin.plugin != activePlugin)
                 {
                     Destroy(plugin.plugin);
                 }
             }
+        }
+
+        public T GetInput<T>() where T : BaseInput
+        {
+            return (T)InputSet;
         }
 
         private void OnEnable()

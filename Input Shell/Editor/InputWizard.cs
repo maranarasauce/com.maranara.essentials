@@ -134,7 +134,7 @@ public class InputSet_Inspector : Editor
         {
             var type = NameToEnumHash.FirstOrDefault(x => x.Value == action.Type).Key;
 
-            string actionText = $"public {type} {action.Name};\n";
+            string actionText = $"public {type} {action.Name} = new {type}(\"{action.Name}\");\n";
             if (action.Mirrored)
                 mirroredGuys.Add(actionText);
             else text += actionText;

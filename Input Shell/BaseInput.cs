@@ -21,8 +21,8 @@ namespace Maranara.InputShell
         Head
     }
 
-    public class BaseInput : ScriptableObject
+    public class BaseInput : MonoBehaviour
     {
-        
+
     }
 }
