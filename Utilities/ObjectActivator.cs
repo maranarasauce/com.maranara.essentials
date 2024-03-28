@@ -5,6 +5,10 @@ using UnityEngine.Serialization;
 
 namespace Maranara.Utility
 {
+    /// <summary>
+    /// A wonderful general class useful for designing intermediate-complexity interactions without resorting to code
+    /// Activates OnTriggerEnter
+    /// </summary>
     public class ObjectActivator : MonoBehaviour
     {
         [Tooltip("True: Only activates once and only disactivates once.")]
@@ -17,17 +21,20 @@ namespace Maranara.Utility
         public bool startLocked = false;
         [Tooltip("Any activation/disactivation will be delayed by X seconds.")]
         public float delay = 0f;
-        [Tooltip("If true, then toDisable will disable upon Activation and toEnable will enable upon Disactivation.")]
+        [Tooltip("If true, then toDisable GameObjects will disable upon Activation and toEnable GameObjects will enable upon Disactivation.")]
         [FormerlySerializedAs("toggleTos")] public bool gameObjectsToggle = false;
 
-        [Tooltip("On Activation, these gameobjects will be enabled.")]
+        [Tooltip("On Activation, these GameObjects will be enabled.")]
         public GameObject[] toEnable;
-        [Tooltip("On Disactivation, these gameobjects will be enabled.")]
+        [Tooltip("On Disactivation, these GameObjects will be enabled.")]
         public GameObject[] toDisable;
         [Tooltip("On Activation, this event will be invoked.")]
         public UltEvent OnActivate;
         [Tooltip("On Disactivation, this event will be invoked.")]
         public UltEvent OnDisactivate;
+
+        [Tooltip("The LayerMask for objects that enter an ObjectActivator trigger")]
+        public LayerMask activationLayer;
         private bool locked;
 
         private void Awake()
@@ -47,7 +54,7 @@ namespace Maranara.Utility
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == 9)
+            if (activationLayer.HasLayer(other.gameObject.layer))
             {
                 Activate();
             }
@@ -55,7 +62,7 @@ namespace Maranara.Utility
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.layer == 9)
+            if (activationLayer.HasLayer(other.gameObject.layer))
             {
                 Disactivate();
             }

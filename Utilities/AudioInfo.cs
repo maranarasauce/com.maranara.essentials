@@ -4,6 +4,9 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 namespace Maranara.Utility
 {
+    /// <summary>
+    /// Stores audio randomness and configuration, making script's audio customization much less boilerplate centric
+    /// </summary>
     [Serializable]
     public struct AudioInfo
     {

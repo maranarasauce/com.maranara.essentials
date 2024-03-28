@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace Maranara.Utility
 {
+    /// <summary>
+    /// Good class for changing Rigidbody properties.
+    /// </summary>
     public class RigidbodySettings : MonoBehaviour
     {
-        public Transform comOverride;
+        [Tooltip("Overrides the Rigidbody's Center of Mass.")]  public Transform comOverride;
         Rigidbody selfRB;
         private void Start()
         {

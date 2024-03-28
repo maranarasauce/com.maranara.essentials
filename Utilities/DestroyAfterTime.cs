@@ -4,11 +4,14 @@ using UnityEngine;
 
 namespace Maranara.Utility
 {
+    /// <summary>
+    /// Disables the attached GameObject after a defined amount of time
+    /// </summary>
     public class DestroyAfterTime : MonoBehaviour
     {
-        [SerializeField] private bool disableInstead;
-        [SerializeField] private float delay;
-        [SerializeField] private AudioSource referenceLength;
+        [Tooltip("Disable the GameObject instead of destroying")] [SerializeField] private bool disableInstead;
+        [Tooltip("The delay before destruction in seconds")] [SerializeField] private float delay;
+        [Tooltip("If filled, the GameObject destroys after AudioSource clip's length")] [SerializeField] private AudioSource referenceLength;
         private float time;
 
         public void Init(AudioSource src)
