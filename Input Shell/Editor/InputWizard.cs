@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using JetBrains.Annotations;
 using Maranara.InputShell;
 using System;
@@ -216,3 +217,4 @@ public class InputSet_Inspector : Editor
         UpdateActionSet();
     }
 }
+#endif

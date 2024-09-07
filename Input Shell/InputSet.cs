@@ -27,7 +27,9 @@ namespace Maranara.InputShell
             Pose
         }
 
+#if UNITY_EDITOR
         [SerializeField] public MonoScript generatedSet;
+#endif
         [SerializeField] public List<Action> actions;
 
         public string NewActionName;
