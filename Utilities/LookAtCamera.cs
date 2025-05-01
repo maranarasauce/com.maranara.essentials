@@ -10,6 +10,7 @@ namespace Maranara.Utility
     public class LookAtCamera : MonoBehaviour
     {
         Transform cam;
+        [Tooltip("If true, will stop the transform from looking up or down")] public bool ignoreY;
         [Tooltip("If the looking axis is incorrect, you can offset the LookRotation here")] public Vector3 offset = Vector3.zero;
 
         private void Start()
@@ -19,7 +20,12 @@ namespace Maranara.Utility
 
         private void Update()
         {
-            transform.rotation = Quaternion.LookRotation(cam.position - transform.position, Vector3.up) * Quaternion.Euler(offset);
+            Vector3 fwd = (transform.position - cam.position).normalized;
+            if (ignoreY)
+                fwd.y = 0f;
+            transform.forward = fwd;
+
+            transform.rotation = Quaternion.LookRotation(fwd, Vector3.up) * Quaternion.Euler(offset);
         }
     }
 
