@@ -18,7 +18,6 @@ namespace Maranara.Utility
         {
             referenceLength = src;
             delay = referenceLength.clip.length;
-
         }
 
         private void Start()

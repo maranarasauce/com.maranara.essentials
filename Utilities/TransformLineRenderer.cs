@@ -8,12 +8,12 @@ namespace Maranara.Utility
     {
         public Transform first;
         public Transform last;
-        public LineRenderer renderer;
+        public LineRenderer lr;
 
         private void Update()
         {
-            renderer.SetPosition(0, renderer.transform.InverseTransformPoint(first.position));
-            renderer.SetPosition(1, renderer.transform.InverseTransformPoint(last.position));
+            lr.SetPosition(0, lr.transform.InverseTransformPoint(first.position));
+            lr.SetPosition(1, lr.transform.InverseTransformPoint(last.position));
         }
     }
 }

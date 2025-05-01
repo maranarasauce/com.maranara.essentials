@@ -1,5 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -25,26 +25,23 @@ namespace Maranara.Utility
         {
             Instance = this;
         }
-
-        public void OnLevelWasLoaded(int level)
-        {
-            Instance = this;
-        }
         #endregion
 
         public Dictionary<string, Queue<GameObject>> poolDictionary;
         public static void SpawnObject(string key, Vector3 position, Quaternion rotation, Vector3 scale)
         {
-            Instance.SpawnProcess(key, position, rotation, scale);
+            Instance.StartCoroutine(Instance.SpawnProcess(key, position, rotation, scale));
         }
 
-        private async UniTask<GameObject> SpawnProcess(string key, Vector3 pos, Quaternion rot, Vector3 big)
+        WaitForEndOfFrame frame;
+        private IEnumerator<GameObject> SpawnProcess(string key, Vector3 pos, Quaternion rot, Vector3 big)
         {
             AsyncOperationHandle<GameObject> result = Addressables.LoadAssetAsync<GameObject>(key);
-            await result;
+            while (!result.IsDone)
+                yield return null;
             GameObject inst = GameObject.Instantiate(result.Result, pos, rot);
             inst.transform.localScale = big;
-            return inst;
+            yield return inst;
         }
 
         public static void SpawnObject(string key, Vector3 position)
@@ -55,28 +52,20 @@ namespace Maranara.Utility
         private const string AUDIO_KEY = "Interaction.Audio";
         public static void PlayAudio(AudioInfo info, Vector3 position)
         {
-            Instance.AudioProcess(info, position);
+            Instance.StartCoroutine(Instance.AudioProcess(info, position));
         }
 
-        public async UniTask AudioProcess(AudioInfo info, Vector3 pos)
+        public IEnumerator AudioProcess(AudioInfo info, Vector3 pos)
         {
-            GameObject inst = await SpawnProcess(AUDIO_KEY, pos, Quaternion.identity, Vector3.zero);
-            DestroyAfterTime time = inst.GetComponent<DestroyAfterTime>();
+            IEnumerator<GameObject> ienum = SpawnProcess(AUDIO_KEY, pos, Quaternion.identity, Vector3.zero);
+            while (ienum.MoveNext())
+                yield return null;
+            GameObject inst = ienum.Current;
             AudioSource src = inst.GetComponent<AudioSource>();
+            info.ApplyToAudioSource(src);
+            DestroyAfterTime time = inst.AddComponent<DestroyAfterTime>();
             time.Init(src);
-            ApplyAudioSource(src, info);
-        }
-
-        public void ApplyAudioSource(AudioSource src, AudioInfo info)
-        {
-            src.clip = info.clips.Random();
-            src.volume = info.Volume + Random.Range(-info.VolumeVariance, info.VolumeVariance);
-            src.pitch = info.Pitch + Random.Range(-info.PitchVariance, info.PitchVariance);
-            src.spatialBlend = info.Spatial ? 1f : 0f;
-            src.spread = info.Spread;
-            src.dopplerLevel = info.Doppler;
-            src.minDistance = info.MinDistance;
-            src.maxDistance = info.MaxDistance;
+            src.Play();
         }
     }
 }

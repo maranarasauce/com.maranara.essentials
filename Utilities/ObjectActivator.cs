@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+
 using UltEvents;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -87,18 +87,12 @@ namespace Maranara.Utility
             if (locked || oneTime && activated)
                 return;
 
-            CoActivate();
+            activated = true;
+            Invoke(nameof(DoActivate), delay);
         }
 
-        private async UniTask CoActivate()
+        private void DoActivate()
         {
-            activated = true;
-
-            if (delay > 0f)
-            {
-                await UniTask.Delay((int)(delay * 1000));
-            }
-
             foreach (GameObject go in toEnable)
             {
                 go.SetActive(true);
@@ -119,17 +113,13 @@ namespace Maranara.Utility
         {
             if (locked || oneTime && disactivated)
                 return;
-            CoDisactivate();
+            Invoke(nameof(DoDisactivate), delay);
         }
 
-        private async UniTask CoDisactivate()
+        private void DoDisactivate()
         {
             disactivated = true;
 
-            if (delay > 0f)
-            {
-                await UniTask.Delay((int)(delay * 1000));
-            }
             foreach (GameObject go in toDisable)
             {
                 go.SetActive(true);

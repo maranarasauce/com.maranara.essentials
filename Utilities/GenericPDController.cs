@@ -9,10 +9,10 @@ namespace Maranara.Utility
     {
         void Start()
         {
-            if (rigidbody == null)
-                rigidbody = GetComponent<Rigidbody>();
+            if (rb == null)
+                rb = GetComponent<Rigidbody>();
 
-            rbTransform = rigidbody.transform;
+            rbTransform = rb.transform;
         }
 
         void FixedUpdate()
@@ -26,7 +26,7 @@ namespace Maranara.Utility
         public float torqueMultiplier = 1;
         public Transform target;
         [NonSerialized] public Transform rbTransform;
-        public Rigidbody rigidbody;
+        public Rigidbody rb;
         [NonSerialized] public Vector3 targetLastPos;
 
         //https://digitalopus.ca/site/pd-controllers/
@@ -40,10 +40,10 @@ namespace Maranara.Utility
             float ksg = kp * g;
             float kdg = (kd + kp * dt) * g;
             Vector3 Pt0 = rbTransform.position;
-            Vector3 Vt0 = rigidbody.velocity;
+            Vector3 Vt0 = rb.velocity;
             Vector3 Pdes = target.position;
             Vector3 F = (Pdes - Pt0) * ksg + (Vdes - Vt0) * kdg;
-            rigidbody.AddForce(F, ForceMode.Acceleration);
+            rb.AddForce(F, ForceMode.Acceleration);
             targetLastPos = target.position;
 
             Quaternion desiredRotation = target.rotation;
@@ -64,12 +64,12 @@ namespace Maranara.Utility
             q.ToAngleAxis(out xMag, out x);
             x.Normalize();
             x *= Mathf.Deg2Rad;
-            Vector3 pidv = kp * x * xMag - kd * rigidbody.angularVelocity;
-            Quaternion rotInertia2World = rigidbody.inertiaTensorRotation * rbTransform.rotation;
+            Vector3 pidv = kp * x * xMag - kd * rb.angularVelocity;
+            Quaternion rotInertia2World = rb.inertiaTensorRotation * rbTransform.rotation;
             pidv = Quaternion.Inverse(rotInertia2World) * pidv;
-            pidv.Scale(rigidbody.inertiaTensor);
+            pidv.Scale(rb.inertiaTensor);
             pidv = rotInertia2World * pidv;
-            rigidbody.AddTorque(pidv, ForceMode.Acceleration);
+            rb.AddTorque(pidv, ForceMode.Acceleration);
         }
     }
 }

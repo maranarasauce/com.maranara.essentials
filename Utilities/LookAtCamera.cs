@@ -9,17 +9,17 @@ namespace Maranara.Utility
     /// </summary>
     public class LookAtCamera : MonoBehaviour
     {
-        Transform camera;
+        Transform cam;
         [Tooltip("If the looking axis is incorrect, you can offset the LookRotation here")] public Vector3 offset = Vector3.zero;
 
         private void Start()
         {
-            camera = Camera.main.transform;
+            cam = Camera.main.transform;
         }
 
         private void Update()
         {
-            transform.rotation = Quaternion.LookRotation(camera.position - transform.position, Vector3.up) * Quaternion.Euler(offset);
+            transform.rotation = Quaternion.LookRotation(cam.position - transform.position, Vector3.up) * Quaternion.Euler(offset);
         }
     }
 
