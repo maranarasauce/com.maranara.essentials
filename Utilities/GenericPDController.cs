@@ -40,7 +40,7 @@ namespace Maranara.Utility
             float ksg = kp * g;
             float kdg = (kd + kp * dt) * g;
             Vector3 Pt0 = rbTransform.position;
-            Vector3 Vt0 = rb.velocity;
+            Vector3 Vt0 = rb.linearVelocity;
             Vector3 Pdes = target.position;
             Vector3 F = (Pdes - Pt0) * ksg + (Vdes - Vt0) * kdg;
             rb.AddForce(F, ForceMode.Acceleration);
