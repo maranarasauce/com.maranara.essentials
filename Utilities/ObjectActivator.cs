@@ -1,6 +1,6 @@
 
-using UltEvents;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Maranara.Utility
@@ -29,9 +29,9 @@ namespace Maranara.Utility
         [Tooltip("On Disactivation, these GameObjects will be enabled.")]
         public GameObject[] toDisable;
         [Tooltip("On Activation, this event will be invoked.")]
-        public UltEvent OnActivate;
+        public UnityEvent OnActivate;
         [Tooltip("On Disactivation, this event will be invoked.")]
-        public UltEvent OnDisactivate;
+        public UnityEvent OnDisactivate;
 
         [Tooltip("The LayerMask for objects that enter an ObjectActivator trigger")]
         public LayerMask activationLayer;
