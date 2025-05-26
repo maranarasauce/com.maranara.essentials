@@ -1,0 +1,21 @@
+{
+    "name": "Maranara.Interaction",
+    "rootNamespace": "",
+    "references": [
+        "UniTask",
+        "Unity.Addressables",
+        "UniTask.Addressables",
+        "Unity.ResourceManager",
+        "UltEvents",
+        "Maranara.Utils"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
