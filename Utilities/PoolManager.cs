@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_ADDRESSABLES
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+#endif
 using Random = UnityEngine.Random;
 
 namespace Maranara.Utility
@@ -24,9 +26,11 @@ namespace Maranara.Utility
         private void Awake()
         {
             Instance = this;
+            Debug.LogError("ERROR: PoolManager is only supported if Unity Addressables are installed.");
         }
         #endregion
 
+#if UNITY_ADDRESSABLES
         public Dictionary<string, Queue<GameObject>> poolDictionary;
         public static void SpawnObject(string key, Vector3 position, Quaternion rotation, Vector3 scale)
         {
@@ -67,5 +71,6 @@ namespace Maranara.Utility
             time.Init(src);
             src.Play();
         }
+#endif
     }
 }
