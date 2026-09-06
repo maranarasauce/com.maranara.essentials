@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using Maranara.Utility;
 using UnityEditor;
 using UnityEngine;
@@ -34,3 +35,4 @@ public class RangeEditor : PropertyDrawer
         EditorGUI.EndProperty();
     }
 }
+#endif

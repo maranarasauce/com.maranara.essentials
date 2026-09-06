@@ -51,7 +51,10 @@ public class Relay : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.layer == 3 && (activationType & ActivationTrigger.PlayerEnter) != ActivationTrigger.None)
+        {
+            Activate();
+        }
     }
 
     private void OnTriggerExit(Collider other)

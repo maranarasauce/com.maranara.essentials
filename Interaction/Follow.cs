@@ -15,12 +15,18 @@ namespace Maranara.Utility
         [Tooltip("Position speed")][SerializeField] public float speed;
         [Tooltip("Rotation speed")][SerializeField] float rotSpeed;
         [Tooltip("Scalar speed")][SerializeField] float scaleSpeed;
-        [Tooltip("Once the object has gone through all waypoints, it will not go to the beginning")][SerializeField] bool dontLoop;
+        [Tooltip("Once the object has gone through all waypoints, it will go to the beginning")][SerializeField] bool loop = true;
         [Tooltip("Positionally locks the Y position, meaning it will not go up or down")][SerializeField] bool lockY;
         [Tooltip("Looks towards the next waypoint instead of copying its rotation")][SerializeField] bool look;
-        [Tooltip("Ignores Time.timeScale")][SerializeField] bool ignoreTimescale;
+        [Tooltip("Ignores Time.timeScale")][SerializeField] Timescale timescale;
         [Tooltip("Only called if Loop is set to false")][SerializeField] UnityEvent OnComplete;
 
+        public enum Timescale
+        {
+            Frame,
+            Physics,
+            Unscaled
+        }
 
         Animator anim;
         Vector3 startPos;
@@ -75,11 +81,25 @@ namespace Maranara.Utility
             waypoints = tsf.ToArray();
         }
 
+        public void ChangeTargetSingle(Transform target)
+        {
+            curWaypoint = 0;
+            waypoints = new Transform[] { target };
+        }
+
         private float Deltatime
         {
             get
             {
-                return ignoreTimescale ? Time.unscaledDeltaTime : Time.deltaTime;
+                switch (timescale)
+                {
+                    case Timescale.Frame:
+                        return Time.deltaTime;
+                    case Timescale.Physics:
+                        return Time.fixedDeltaTime;
+                    default:
+                        return Time.unscaledDeltaTime;
+                }
             }
         }
 
@@ -112,7 +132,7 @@ namespace Maranara.Utility
 
                 if (curWaypoint > waypoints.Length - 1)
                 {
-                    if (dontLoop)
+                    if (!loop)
                     {
                         curWaypoint = 0;
                         enabled = false; OnComplete?.Invoke();
@@ -146,6 +166,9 @@ namespace Maranara.Utility
                 waypoints = list.ToArray();
             }
 
+            if (waypoints == null)
+                return;
+
             for (int i = 0; i < waypoints.Length; i++)
             {
                 Gizmos.color = Color.cyan;
@@ -161,7 +184,7 @@ namespace Maranara.Utility
 
                 if (i == waypoints.Length - 1)
                 {
-                    if (!dontLoop)
+                    if (!loop)
                         Gizmos.DrawLine(pt2.position, waypoints[0].position);
                     else Gizmos.color = Color.red;
                     GeneratePoint(pt2);
