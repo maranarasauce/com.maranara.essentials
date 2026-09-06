@@ -2,7 +2,7 @@
   "name": "com.maranara.essentials",
   "version": "1.0.0",
   "displayName": "Maranara Essentials",
-  "description": "A collection of essential Unity scripts, such as an Input Shell, Pool Manager, various level utility scripts and library extensions.",
+  "description": "Useful scripts that help content creation become more efficient.",
   "unity": "2021.3",
   "unityRelease": "18f1",
  "keywords": [
