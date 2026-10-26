@@ -91,18 +91,66 @@ public class EditorAutomation
     [MenuItem("GameObject/Automation/Parenting/Make Empty Parent", false, 0)]
     static void Empty()
     {
-        MakeGrabbable.MoveParent();
+        foreach (GameObject grabbableObj in Selection.gameObjects)
+        {
+            if (grabbableObj == null)
+            {
+                // uhoh
+                return;
+            }
+
+            var obj2 = new GameObject(grabbableObj.name);
+            obj2.transform.parent = grabbableObj.transform.parent;
+            obj2.transform.position = grabbableObj.transform.position;
+            obj2.transform.rotation = grabbableObj.transform.rotation;
+            obj2.transform.SetSiblingIndex(grabbableObj.transform.GetSiblingIndex());
+            obj2.transform.localScale = grabbableObj.transform.localScale;
+            grabbableObj.transform.SetParent(obj2.transform, true);
+        }
     }
 
     [MenuItem("GameObject/Automation/Parenting/Make Centered Empty Parent", false, 0)]
     static void EmptyCenter()
     {
-        MakeGrabbable.MoveParentCenter();
+        foreach (GameObject grabbableObj in Selection.gameObjects)
+        {
+            if (grabbableObj == null)
+            {
+                // uhoh
+                return;
+            }
+
+            var obj2 = new GameObject(grabbableObj.name);
+            obj2.transform.parent = grabbableObj.transform.parent;
+            obj2.transform.position = grabbableObj.GetComponentInChildren<Renderer>().bounds.center; /* grabbableObj.transform.position */
+            obj2.transform.rotation = grabbableObj.transform.rotation;
+            obj2.transform.SetSiblingIndex(grabbableObj.transform.GetSiblingIndex());
+            obj2.transform.localScale = grabbableObj.transform.localScale;
+            grabbableObj.transform.SetParent(obj2.transform, true);
+        }
     }
 
     [MenuItem("GameObject/Automation/Parenting/Make Bottom Centered Empty Parent", false, 0)]
     static void EmptyCenterBottom()
     {
-        MakeGrabbable.MoveParentBottomCenter();
+        foreach (GameObject grabbableObj in Selection.gameObjects)
+        {
+            if (grabbableObj == null)
+            {
+                // uhoh
+            }
+
+            var bounds = grabbableObj.GetComponentInChildren<Renderer>().bounds;
+            var calculatedButtomCenter = bounds.center;
+            calculatedButtomCenter.y -= bounds.size.y / 2;
+
+            var obj2 = new GameObject(grabbableObj.name);
+            obj2.transform.parent = grabbableObj.transform.parent;
+            obj2.transform.position = calculatedButtomCenter; /* grabbableObj.transform.position */
+            obj2.transform.rotation = grabbableObj.transform.rotation;
+            obj2.transform.SetSiblingIndex(grabbableObj.transform.GetSiblingIndex());
+            obj2.transform.localScale = grabbableObj.transform.localScale;
+            grabbableObj.transform.SetParent(obj2.transform, true);
+        }
     }
 }
