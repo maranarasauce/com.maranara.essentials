@@ -24,24 +24,38 @@ public class EditorAutomation
         GameObject[] selected = Selection.gameObjects;
         foreach (GameObject go in selected)
         {
-            Undo.RecordObject(go, "Pre-Collider Encapsulation");
-
             BoxCollider col = go.GetComponent<BoxCollider>();
             if (col == null)
                 col = go.AddComponent<BoxCollider>();
 
             Undo.RecordObject(col, "Collider Encapsulation");
 
+            Transform parent = go.transform.parent;
+            Vector3 pos = go.transform.localPosition;
+            Quaternion rot = go.transform.localRotation;
+            Vector3 scale = go.transform.localScale;
+
+            go.transform.SetParent(null, true);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.identity;
+            go.transform.localScale = Vector3.one;
+
             col.size = Vector3.zero;
             col.center = Vector3.zero;
 
-            Quaternion rot = go.transform.rotation;
-            go.transform.rotation = Quaternion.identity;
-
             Bounds bds = col.bounds;
+
             Renderer[] rends = go.GetComponentsInChildren<Renderer>(true);
+            bds.center = rends[0].bounds.center;
             foreach (Renderer r in rends)
             {
+                if (r is ParticleSystemRenderer)
+                {
+                    continue;
+                }
+                if (!r.gameObject.activeInHierarchy || !r.enabled)
+                    continue;
+
                 bds.Encapsulate(r.bounds);
             }
 
@@ -50,9 +64,11 @@ public class EditorAutomation
             col.center += bds.center;
             col.center = mat.inverse.MultiplyPoint3x4(col.center);
             col.size = mat.inverse.MultiplyVector(bds.size);
-            go.transform.rotation = rot;
 
-            Undo.RecordObject(col, "Collider Encapsulation Calculation");
+            go.transform.SetParent(parent, true);
+            go.transform.localPosition = pos;
+            go.transform.localRotation = rot;
+            go.transform.localScale = scale;
         }
     }
 
@@ -70,5 +86,23 @@ public class EditorAutomation
             int x = i + 1;
             selected[i].name = string.Concat(name, " ", x.ToString());
         }
+    }
+
+    [MenuItem("GameObject/Automation/Parenting/Make Empty Parent", false, 0)]
+    static void Empty()
+    {
+        MakeGrabbable.MoveParent();
+    }
+
+    [MenuItem("GameObject/Automation/Parenting/Make Centered Empty Parent", false, 0)]
+    static void EmptyCenter()
+    {
+        MakeGrabbable.MoveParentCenter();
+    }
+
+    [MenuItem("GameObject/Automation/Parenting/Make Bottom Centered Empty Parent", false, 0)]
+    static void EmptyCenterBottom()
+    {
+        MakeGrabbable.MoveParentBottomCenter();
     }
 }
